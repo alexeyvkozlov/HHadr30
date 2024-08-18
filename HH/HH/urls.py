@@ -16,12 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from rest_framework import routers
+from hhapp.api_views import EmployerViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'employeries', EmployerViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hhapp.urls', namespace='hh')),
-    path('users/', include('userapp.urls', namespace='users'))
+    path('users/', include('userapp.urls', namespace='users')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v0/', include(router.urls))
 ]
 
 if settings.DEBUG:
